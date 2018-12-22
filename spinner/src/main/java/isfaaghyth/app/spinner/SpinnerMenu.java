@@ -1,6 +1,7 @@
 package isfaaghyth.app.spinner;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,7 +104,6 @@ public class SpinnerMenu extends RelativeLayout {
                 listener.onClick(item);
             }
         });
-        lstDropdown.setAdapter(adapter);
 
         currentItem.setOnClickListener(new OnClickListener() {
             @Override
@@ -111,6 +111,8 @@ public class SpinnerMenu extends RelativeLayout {
                 isCurrentClicked();
             }
         });
+
+        lstDropdown.setAdapter(adapter);
     }
 
     private void initCurrentItem(final ItemContent item) {
@@ -137,5 +139,6 @@ public class SpinnerMenu extends RelativeLayout {
     private void currentItem(ItemContent item) {
         txtItem.setText(item.menuItem());
         txtSubItem.setText(item.menuSubItem());
+        txtItem.setTypeface(null, Typeface.BOLD);
     }
 }

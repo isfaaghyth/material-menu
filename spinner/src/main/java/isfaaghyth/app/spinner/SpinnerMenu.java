@@ -120,11 +120,9 @@ public class SpinnerMenu extends RelativeLayout {
             @Override public String menuItem() {
                 return item.menuItem();
             }
-
             @Override public String menuSubItem() {
                 return item.menuSubItem();
             }
-
             @Override public int dataId() {
                 return 0;
             }
@@ -137,8 +135,12 @@ public class SpinnerMenu extends RelativeLayout {
      * @param item
      */
     private void currentItem(ItemContent item) {
-        txtItem.setText(item.menuItem());
-        txtSubItem.setText(item.menuSubItem());
         txtItem.setTypeface(null, Typeface.BOLD);
+        txtItem.setText(item.menuItem());
+        if (!item.menuSubItem().isEmpty()) {
+            txtSubItem.setText(item.menuSubItem());
+        } else {
+            txtSubItem.setVisibility(View.GONE);
+        }
     }
 }

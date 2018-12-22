@@ -23,6 +23,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:orientation="vertical">
 
                 <TextView
@@ -31,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textColor="@android:color/darker_gray"
-                    tools:text="Person Name"/>
+                    tools:text="123"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:textColor="@android:color/black"
-                        tools:text="Number ID"/>
+                        tools:text="Name"/>
 
                 </LinearLayout>
 

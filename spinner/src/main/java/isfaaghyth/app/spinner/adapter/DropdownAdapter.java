@@ -55,8 +55,18 @@ public class DropdownAdapter extends ArrayAdapter<ItemContent> {
         }
 
         //set value
-        viewHolder.txtItem.setText(data.menuItem());
-        viewHolder.txtSubItem.setText(data.menuSubItem());
+        if (!data.menuItem().isEmpty()) {
+            viewHolder.txtItem.setText(data.menuItem());
+        } else {
+            viewHolder.txtItem.setVisibility(View.GONE);
+        }
+
+        if (!data.menuSubItem().isEmpty()) {
+            viewHolder.txtSubItem.setText(data.menuSubItem());
+        } else {
+            viewHolder.txtSubItem.setVisibility(View.GONE);
+        }
+
         viewHolder.rootItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

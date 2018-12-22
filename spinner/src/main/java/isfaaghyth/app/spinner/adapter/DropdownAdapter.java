@@ -1,7 +1,14 @@
 package isfaaghyth.app.spinner.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,4 +36,35 @@ public class DropdownAdapter extends ArrayAdapter<ItemContent> {
         this.listener = listener;
     }
 
+    @NonNull @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ItemContent data = items.get(position);
+        View itemView = convertView;
+        ViewHolder viewHolder;
+
+        if (itemView == null) {
+           viewHolder = new ViewHolder();
+           LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+           itemView = inflater.inflate(R.layout.item_menu, parent, false);
+           viewHolder.rootItem = itemView.findViewById(R.id.root_item);
+           viewHolder.txtItem = itemView.findViewById(R.id.txt_item);
+           viewHolder.txtSubItem = itemView.findViewById(R.id.txt_sub_item);
+           itemView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) itemView.getTag();
+        }
+
+        //set value
+        viewHolder.txtItem.setText(data.menuItem());
+        viewHolder.txtSubItem.setText(data.menuSubItem());
+        //viewHolder.rootItem.setOnClickListener();
+
+        return itemView;
+    }
+
+    static class ViewHolder {
+        RelativeLayout rootItem;
+        TextView txtItem;
+        TextView txtSubItem;
+    }
 }

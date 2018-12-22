@@ -5,7 +5,9 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -113,6 +115,15 @@ public class SpinnerMenu extends RelativeLayout {
         });
 
         lstDropdown.setAdapter(adapter);
+
+        if (adapter.getCount() > 5) {
+            View item = adapter.getView(0, null, lstDropdown);
+            item.measure(0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LayoutParams.MATCH_PARENT, (int) (5.5 * item.getMeasuredHeight())
+            );
+            lstDropdown.setLayoutParams(params);
+        }
     }
 
     private void initCurrentItem(final ItemContent item) {

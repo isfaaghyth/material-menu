@@ -32,31 +32,36 @@ import isfaaghyth.app.spinner.util.MenuItemListener;
 /**
  * Created by isfaaghyth on 22/12/18.
  * github: @isfaaghyth
+ * a simple component to replace a traditional spinner.
+ * by following the style of material components, this spinner can
+ * help maximize utility in implementing the dropdown.
+ *
+ * The reason for developing the component is, because
+ * the official components from Google for material components are
+ * still not published, aka still in the planning stage
+ * (read more: https://material.io/design/components/menus.html).
  */
 public class SpinnerMenu extends RelativeLayout {
 
     private Context context;
 
-    /**
-     * each views of view_main
-     */
+    //view for main component display
     private TextView txtItem;
     private TextView txtSubItem;
     private ImageView icArrow;
     private ListView lstDropdown;
     private View currentItem;
 
+    //handles for item click events
     private MenuItemListener listener;
 
-    /**
-     * flag to show up/down of dropdown list
-     */
+    //as a flag to find out whether this menu is clicked or not
     private boolean isClicked = false;
 
     private View createView(Context context) {
         View viewMain = LayoutInflater.from(context).inflate(R.layout.view_main, null);
 
-        //root view (= current item)
+        //root item
         currentItem = viewMain.findViewById(R.id.current_item);
 
         txtItem = viewMain.findViewById(R.id.txt_item);
@@ -80,12 +85,13 @@ public class SpinnerMenu extends RelativeLayout {
     }
 
     /**
-     * insert all of data into listView
-     * @param items
+     * insert all of data into dropdown list
+     * @param items list of items
+     * @param <T> the item type
      */
     public <T extends ItemContent> void setItems(List<T> items) {
-        build(items);
         initCurrentItem(items.get(0));
+        build(items);
     }
 
     public <T> void get(MenuItemListener<T> listener) {
@@ -93,7 +99,8 @@ public class SpinnerMenu extends RelativeLayout {
     }
 
     /**
-     * check if the current item clicked or not
+     * as a flag to find out whether this menu is clicked or not,
+     * this will also replace the arrow icon for the interactive aspect.
      */
     private void isCurrentClicked() {
         if (isClicked) {
@@ -107,8 +114,15 @@ public class SpinnerMenu extends RelativeLayout {
         }
     }
 
+    /**
+     * set adapters for dropdown menus and display lists to limit items to be displayed.
+     * @param items list of items
+     * @param <T> the item type
+     */
     private <T extends ItemContent> void build(List<T> items) {
         DropdownAdapter adapter = new DropdownAdapter<>(items, context);
+
+        //handle when the item is clicked through the dropdown menu
         adapter.setListener(new MenuItemListener<T>() {
             @Override
             public void onClick(T item) {
@@ -118,20 +132,15 @@ public class SpinnerMenu extends RelativeLayout {
             }
         });
 
-        currentItem.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isCurrentClicked();
-            }
-        });
-
         lstDropdown.setAdapter(adapter);
 
-        if (adapter.getCount() > 5) {
+        //maximum of 5 items displayed
+        int MAX_ITEMS_DISPLAYED = 5;
+        if (adapter.getCount() > MAX_ITEMS_DISPLAYED) {
             View item = adapter.getView(0, null, lstDropdown);
             item.measure(0, 0);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT, (int) (5.5 * item.getMeasuredHeight())
+                    LayoutParams.MATCH_PARENT, MAX_ITEMS_DISPLAYED * item.getMeasuredHeight()
             );
             lstDropdown.setLayoutParams(params);
         }
@@ -150,16 +159,24 @@ public class SpinnerMenu extends RelativeLayout {
     }
 
     /**
-     * set current item
-     * @param item
+     * display data based on selected items
+     * @param item the current data
      */
     private void currentItem(ItemContent item) {
         txtItem.setTypeface(null, Typeface.BOLD);
         txtItem.setText(item.menuItem());
+
         if (!item.menuSubItem().isEmpty()) {
             txtSubItem.setText(item.menuSubItem());
         } else {
             txtSubItem.setVisibility(View.GONE);
         }
+
+        currentItem.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isCurrentClicked();
+            }
+        });
     }
 }

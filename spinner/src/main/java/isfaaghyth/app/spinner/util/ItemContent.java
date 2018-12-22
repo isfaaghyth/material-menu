@@ -15,8 +15,19 @@ package isfaaghyth.app.spinner.util;
 /**
  * Created by isfaaghyth on 22/12/18.
  * github: @isfaaghyth
+ *
+ * archetype to display main items and sub items.
  */
 public interface ItemContent {
+    /**
+     * main items
+     * @return String
+     */
     String menuItem();
+
+    /**
+     * sub items
+     * @return String
+     */
     String menuSubItem();
 }

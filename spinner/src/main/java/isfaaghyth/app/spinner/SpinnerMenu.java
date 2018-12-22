@@ -74,17 +74,22 @@ public class SpinnerMenu extends RelativeLayout {
         initCurrentItem(items.get(0));
     }
 
-    private boolean isCurrentClicked() {
+    public void get(MenuItemListener listener) {
+        this.listener = listener;
+    }
+
+    /**
+     * check if the current item clicked or not
+     */
+    private void isCurrentClicked() {
         if (isCurrentClicked) {
-            lstDropdown.setVisibility(View.VISIBLE);
+            lstDropdown.setVisibility(View.GONE);
             icArrow.setImageResource(R.mipmap.ic_arrow_drop_down);
             isCurrentClicked = false;
-            return false;
         } else {
-            lstDropdown.setVisibility(View.GONE);
+            lstDropdown.setVisibility(View.VISIBLE);
             icArrow.setImageResource(R.mipmap.ic_arrow_drop_up);
             isCurrentClicked = true;
-            return true;
         }
     }
 
@@ -99,6 +104,13 @@ public class SpinnerMenu extends RelativeLayout {
             }
         });
         lstDropdown.setAdapter(adapter);
+
+        currentItem.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isCurrentClicked();
+            }
+        });
     }
 
     private void initCurrentItem(final ItemContent item) {

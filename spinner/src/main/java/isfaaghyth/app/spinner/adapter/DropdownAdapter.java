@@ -38,7 +38,7 @@ public class DropdownAdapter extends ArrayAdapter<ItemContent> {
 
     @NonNull @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ItemContent data = items.get(position);
+        final ItemContent data = items.get(position);
         View itemView = convertView;
         ViewHolder viewHolder;
 
@@ -57,7 +57,12 @@ public class DropdownAdapter extends ArrayAdapter<ItemContent> {
         //set value
         viewHolder.txtItem.setText(data.menuItem());
         viewHolder.txtSubItem.setText(data.menuSubItem());
-        //viewHolder.rootItem.setOnClickListener();
+        viewHolder.rootItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(data);
+            }
+        });
 
         return itemView;
     }

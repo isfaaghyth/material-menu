@@ -1,3 +1,15 @@
+/**
+ * Copyright (c) 2018, isfaaghyth.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ * the License for the specific language governing permissions and limitations under the License.
+ */
 package isfaaghyth.app.spinner;
 
 import android.content.Context;
@@ -5,7 +17,6 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,7 +51,7 @@ public class SpinnerMenu extends RelativeLayout {
     /**
      * flag to show up/down of dropdown list
      */
-    private boolean isCurrentClicked = false;
+    private boolean isClicked = false;
 
     private View createView(Context context) {
         View viewMain = LayoutInflater.from(context).inflate(R.layout.view_main, null);
@@ -72,12 +83,12 @@ public class SpinnerMenu extends RelativeLayout {
      * insert all of data into listView
      * @param items
      */
-    public void setItems(List<ItemContent> items) {
+    public <T extends ItemContent> void setItems(List<T> items) {
         build(items);
         initCurrentItem(items.get(0));
     }
 
-    public void get(MenuItemListener listener) {
+    public <T> void get(MenuItemListener<T> listener) {
         this.listener = listener;
     }
 
@@ -85,22 +96,22 @@ public class SpinnerMenu extends RelativeLayout {
      * check if the current item clicked or not
      */
     private void isCurrentClicked() {
-        if (isCurrentClicked) {
+        if (isClicked) {
             lstDropdown.setVisibility(View.GONE);
             icArrow.setImageResource(R.mipmap.ic_arrow_drop_down);
-            isCurrentClicked = false;
+            isClicked = false;
         } else {
             lstDropdown.setVisibility(View.VISIBLE);
             icArrow.setImageResource(R.mipmap.ic_arrow_drop_up);
-            isCurrentClicked = true;
+            isClicked = true;
         }
     }
 
-    private void build(List<ItemContent> items) {
-        DropdownAdapter adapter = new DropdownAdapter(items, context);
-        adapter.setListener(new MenuItemListener() {
+    private <T extends ItemContent> void build(List<T> items) {
+        DropdownAdapter adapter = new DropdownAdapter<>(items, context);
+        adapter.setListener(new MenuItemListener<T>() {
             @Override
-            public void onClick(ItemContent item) {
+            public void onClick(T item) {
                 currentItem(item);
                 isCurrentClicked();
                 listener.onClick(item);
@@ -133,9 +144,6 @@ public class SpinnerMenu extends RelativeLayout {
             }
             @Override public String menuSubItem() {
                 return item.menuSubItem();
-            }
-            @Override public int dataId() {
-                return 0;
             }
         };
         currentItem(currentItem);

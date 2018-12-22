@@ -19,9 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import isfaaghyth.app.spinner.R;
@@ -88,9 +90,62 @@ public class DropdownAdapter<T extends ItemContent> extends ArrayAdapter<T> {
         return itemView;
     }
 
-    static class ViewHolder {
-        RelativeLayout rootItem;
-        TextView txtItem;
-        TextView txtSubItem;
+
+    @NonNull @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                List<T> FilteredArrList = new ArrayList<>();
+
+                if (constraint.length() == 0) {
+                    results.count = items.size();
+                    results.values = items;
+                } else {
+                    String query = constraint.toString().toLowerCase();
+                    for (int i = 0; i < items.size(); i++) {
+                        T item = items.get(i);
+                        String data = item.menuItem();
+                        if (data.contains(query)) {
+                            FilteredArrList.add(item);
+                        }
+                    }
+                    results.count = FilteredArrList.size();
+                    results.values = FilteredArrList;
+                }
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                notifyDataSetChanged();
+            }
+        };
+//            @Override
+//            protected FilterResults performFiltering(CharSequence constraint) {
+//                Filter.FilterResults filterResults = new FilterResults();
+//                List<T> data = new ArrayList<>();
+//                for (T item: data) {
+//                    if (item.menuItem().equalsIgnoreCase(constraint.toString())) {
+//                        data.add(item);
+//                    }
+//                }
+//                filterResults.values = data;
+//                filterResults.count = data.size();
+//                return filterResults;
+//            }
+//
+//            @Override
+//            protected void publishResults(CharSequence constraint, FilterResults results) {
+//                notifyDataSetChanged();
+//            }
+//        };
+    }
+
+    private static class ViewHolder {
+        private RelativeLayout rootItem;
+        private TextView txtItem;
+        private TextView txtSubItem;
     }
 }

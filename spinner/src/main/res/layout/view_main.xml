@@ -69,12 +69,30 @@
 
         </RelativeLayout>
 
-        <ListView
-            android:id="@+id/lst_menu"
-            android:visibility="gone"
-            android:divider="@null"
+        <LinearLayout
+            android:id="@+id/dropdown_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search..."
+                android:focusableInTouchMode="true"
+                android:padding="10dp"
+                android:layout_margin="6dp"
+                android:background="@android:drawable/editbox_background_normal"/>
+
+            <ListView
+                android:id="@+id/lst_menu"
+                android:divider="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

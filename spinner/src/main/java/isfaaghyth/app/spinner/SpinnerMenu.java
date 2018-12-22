@@ -14,15 +14,19 @@ package isfaaghyth.app.spinner;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import isfaaghyth.app.spinner.adapter.DropdownAdapter;
@@ -50,6 +54,8 @@ public class SpinnerMenu extends RelativeLayout {
     private TextView txtSubItem;
     private ImageView icArrow;
     private ListView lstDropdown;
+    private LinearLayout dropdownList;
+    private EditText edtSearch;
     private View currentItem;
 
     //handles for item click events
@@ -67,6 +73,8 @@ public class SpinnerMenu extends RelativeLayout {
         txtItem = viewMain.findViewById(R.id.txt_item);
         txtSubItem = viewMain.findViewById(R.id.txt_sub_item);
         lstDropdown = viewMain.findViewById(R.id.lst_menu);
+        dropdownList = viewMain.findViewById(R.id.dropdown_list);
+        edtSearch = viewMain.findViewById(R.id.edt_search);
         icArrow = viewMain.findViewById(R.id.ic_arrow);
 
         return viewMain;
@@ -104,11 +112,11 @@ public class SpinnerMenu extends RelativeLayout {
      */
     private void isCurrentClicked() {
         if (isClicked) {
-            lstDropdown.setVisibility(View.GONE);
+            dropdownList.setVisibility(View.GONE);
             icArrow.setImageResource(R.mipmap.ic_arrow_drop_down);
             isClicked = false;
         } else {
-            lstDropdown.setVisibility(View.VISIBLE);
+            dropdownList.setVisibility(View.VISIBLE);
             icArrow.setImageResource(R.mipmap.ic_arrow_drop_up);
             isClicked = true;
         }
@@ -119,8 +127,8 @@ public class SpinnerMenu extends RelativeLayout {
      * @param items list of items
      * @param <T> the item type
      */
-    private <T extends ItemContent> void build(List<T> items) {
-        DropdownAdapter adapter = new DropdownAdapter<>(items, context);
+    private <T extends ItemContent> void build(final List<T> items) {
+        final DropdownAdapter adapter = new DropdownAdapter<>(items, context);
 
         //handle when the item is clicked through the dropdown menu
         adapter.setListener(new MenuItemListener<T>() {
@@ -133,6 +141,15 @@ public class SpinnerMenu extends RelativeLayout {
         });
 
         lstDropdown.setAdapter(adapter);
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length() < 3) return;
+                adapter.getFilter().filter(s.toString());
+            }
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override public void afterTextChanged(Editable s) { }
+        });
 
         //maximum of 5 items displayed
         int MAX_ITEMS_DISPLAYED = 5;

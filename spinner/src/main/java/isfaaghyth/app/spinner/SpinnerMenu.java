@@ -17,7 +17,6 @@ import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -27,13 +26,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import isfaaghyth.app.spinner.adapter.DropdownAdapter;
 import isfaaghyth.app.spinner.util.ItemContent;
 import isfaaghyth.app.spinner.util.KeyboardUtils;
-import isfaaghyth.app.spinner.util.MenuItemListener;
+import isfaaghyth.app.spinner.callback.MenuItemListener;
 
 /**
  * Created by isfaaghyth on 22/12/18.
@@ -137,13 +135,13 @@ public class SpinnerMenu extends RelativeLayout {
         adapter.setListener(new MenuItemListener<T>() {
             @Override
             public void onClick(T item) {
+                //hide keyboard
+                KeyboardUtils.hideSoftInput(getRootView(), getContext());
+
                 currentItem(item);
 
                 //change view
                 isCurrentClicked();
-
-                //hide keyboard
-                KeyboardUtils.hideSoftInput(getRootView(), getContext());
 
                 //reset adapter
                 edtSearch.setText("");
@@ -167,8 +165,8 @@ public class SpinnerMenu extends RelativeLayout {
             @Override public void afterTextChanged(Editable s) { }
         });
 
-        //maximum of 5 items displayed
-        int MAX_ITEMS_DISPLAYED = 5;
+        //maximum of 4 items displayed
+        int MAX_ITEMS_DISPLAYED = 4;
         if (adapter.getCount() > MAX_ITEMS_DISPLAYED) {
             View item = adapter.getView(0, null, lstDropdown);
             item.measure(0, 0);
@@ -180,15 +178,14 @@ public class SpinnerMenu extends RelativeLayout {
     }
 
     private void initCurrentItem(final ItemContent item) {
-        ItemContent currentItem = new ItemContent() {
+        currentItem(new ItemContent() {
             @Override public String menuItem() {
                 return item.menuItem();
             }
             @Override public String menuSubItem() {
                 return item.menuSubItem();
             }
-        };
-        currentItem(currentItem);
+        });
     }
 
     /**

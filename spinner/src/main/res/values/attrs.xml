@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpinnerMenu">
+        <!--hide a subitem-->
+        <attr name="sub_item_visible" format="boolean"/>
+        <!--searchable-->
+        <attr name="searchable" format="boolean"/>
+    </declare-styleable>
+</resources>

@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -144,16 +145,11 @@ public class SpinnerMenu extends RelativeLayout {
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().length() < 3) return;
-                adapter.filter(s.toString());
-            }
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override public void afterTextChanged(Editable s) { }
-        });
-
-        edtSearch.removeTextChangedListener(new TextWatcher() {
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filter(s.toString());
+                if (s.toString().isEmpty()) {
+                    adapter.toDefault();
+                } else if (s.toString().length() > 3) {
+                    adapter.filter(s.toString());
+                }
             }
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override public void afterTextChanged(Editable s) { }

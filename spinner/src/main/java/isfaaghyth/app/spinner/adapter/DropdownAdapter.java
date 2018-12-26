@@ -51,13 +51,14 @@ public class DropdownAdapter<T extends ItemContent> extends ArrayAdapter<T> {
         this.listener = listener;
     }
 
+    public void toDefault() {
+        this.items.addAll(tempItems);
+        notifyDataSetChanged();
+    }
+
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
         items.clear();
-        if (charText.isEmpty()) {
-            items.addAll(tempItems);
-            return;
-        }
         for (T wp: tempItems) {
             if (wp.menuItem().toLowerCase(Locale.getDefault()).contains(charText)) {
                 items.add(wp);

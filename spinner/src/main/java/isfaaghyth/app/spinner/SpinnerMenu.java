@@ -139,6 +139,9 @@ public class SpinnerMenu extends RelativeLayout {
             public void onClick(T item) {
                 currentItem(item);
 
+                //change view
+                isCurrentClicked();
+
                 //hide keyboard
                 KeyboardUtils.hideSoftInput(getRootView(), getContext());
 
@@ -208,8 +211,5 @@ public class SpinnerMenu extends RelativeLayout {
                 isCurrentClicked();
             }
         });
-
-        //change view
-        isCurrentClicked();
     }
 }

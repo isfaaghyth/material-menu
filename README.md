@@ -39,8 +39,8 @@ personList.add("Ghiath", 20)
 //define in your activity
 spinner_menu.setItems(personList())
 spinner_menu.get(object: MenuItemListener<Person>() { //handle on click.
-    override public fun onClick(Person item) {
-         Log.d("TAG", item.name);
+    override fun onClick(Person item) {
+         Log.d("TAG", item.name)
     }
 })
 ```

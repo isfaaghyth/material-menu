@@ -13,6 +13,7 @@
 package isfaaghyth.app.spinner;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -80,6 +81,27 @@ public class SpinnerMenu extends RelativeLayout {
         return viewMain;
     }
 
+    /**
+     * custom attribute for the spinner display configuration
+     * @param attrs
+     */
+    private void attributes(AttributeSet attrs) {
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.SpinnerMenu);
+        boolean isSearchable = ta.getBoolean(R.styleable.SpinnerMenu_searchable, false);
+        boolean isSubItem = ta.getBoolean(R.styleable.SpinnerMenu_sub_item_visible, false);
+        if (isSearchable) {
+            edtSearch.setVisibility(VISIBLE);
+        } else {
+            edtSearch.setVisibility(GONE);
+        }
+        if (isSubItem) {
+            txtSubItem.setVisibility(VISIBLE);
+        } else {
+            txtSubItem.setVisibility(GONE);
+        }
+        ta.recycle();
+    }
+
     public SpinnerMenu(Context context) {
         super(context);
         this.context = context;
@@ -90,6 +112,7 @@ public class SpinnerMenu extends RelativeLayout {
         super(context, attrs);
         this.context = context;
         addView(createView(context));
+        attributes(attrs);
     }
 
     /**

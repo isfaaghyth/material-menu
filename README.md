@@ -1,10 +1,10 @@
 ![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg)
-![GitHub](https://img.shields.io/github/license/isfaaghyth/rx-priority-scheduler.svg)
-![GitHub forks](https://img.shields.io/github/forks/isfaaghyth/rx-priority-scheduler.svg)
-![GitHub issues](https://img.shields.io/github/issues/isfaaghyth/rx-priority-scheduler.svg)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/isfaaghyth/rx-priority-scheduler.svg)
-![GitHub contributors](https://img.shields.io/github/contributors/isfaaghyth/rx-priority-scheduler.svg)
-![GitHub top language](https://img.shields.io/github/languages/top/isfaaghyth/rx-priority-scheduler.svg)
+![GitHub](https://img.shields.io/github/license/isfaaghyth/material-menu.svg)
+![GitHub forks](https://img.shields.io/github/forks/isfaaghyth/material-menu.svg)
+![GitHub issues](https://img.shields.io/github/issues/isfaaghyth/material-menu.svg)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/isfaaghyth/material-menu.svg)
+![GitHub contributors](https://img.shields.io/github/contributors/isfaaghyth/material-menu.svg)
+![GitHub top language](https://img.shields.io/github/languages/top/isfaaghyth/material-menu.svg)
 
 # Material Menu
 Menus display a list of choices on temporary surfaces.

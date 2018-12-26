@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import isfaaghyth.app.spinner.R;
 import isfaaghyth.app.spinner.util.ItemContent;
@@ -38,21 +39,36 @@ public class DropdownAdapter<T extends ItemContent> extends ArrayAdapter<T> {
 
     private List<T> items;
     private MenuItemListener<T> listener;
+    private List<T> tempItems = new ArrayList<>();
 
     public DropdownAdapter(List<T> items, Context context) {
         super(context, R.layout.item_menu, items);
         this.items = items;
+        tempItems.addAll(items);
     }
 
     public void setListener(MenuItemListener<T> listener) {
         this.listener = listener;
     }
 
-    @NonNull @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final T data = items.get(position);
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        items.clear();
+        if (charText.isEmpty()) {
+            items.addAll(tempItems);
+            return;
+        }
+        for (T wp: tempItems) {
+            if (wp.menuItem().toLowerCase(Locale.getDefault()).contains(charText)) {
+                items.add(wp);
+            }
+        }
+        notifyDataSetChanged();
+    }
 
-        View itemView = convertView;
+    @NonNull @Override
+    public View getView(int position, @Nullable View itemView, @NonNull ViewGroup parent) {
+        final T data = items.get(position);
         ViewHolder viewHolder;
 
         if (itemView == null) {
@@ -88,59 +104,6 @@ public class DropdownAdapter<T extends ItemContent> extends ArrayAdapter<T> {
         });
 
         return itemView;
-    }
-
-
-    @NonNull @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                List<T> FilteredArrList = new ArrayList<>();
-
-                if (constraint.length() == 0) {
-                    results.count = items.size();
-                    results.values = items;
-                } else {
-                    String query = constraint.toString().toLowerCase();
-                    for (int i = 0; i < items.size(); i++) {
-                        T item = items.get(i);
-                        String data = item.menuItem();
-                        if (data.contains(query)) {
-                            FilteredArrList.add(item);
-                        }
-                    }
-                    results.count = FilteredArrList.size();
-                    results.values = FilteredArrList;
-                }
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                notifyDataSetChanged();
-            }
-        };
-//            @Override
-//            protected FilterResults performFiltering(CharSequence constraint) {
-//                Filter.FilterResults filterResults = new FilterResults();
-//                List<T> data = new ArrayList<>();
-//                for (T item: data) {
-//                    if (item.menuItem().equalsIgnoreCase(constraint.toString())) {
-//                        data.add(item);
-//                    }
-//                }
-//                filterResults.values = data;
-//                filterResults.count = data.size();
-//                return filterResults;
-//            }
-//
-//            @Override
-//            protected void publishResults(CharSequence constraint, FilterResults results) {
-//                notifyDataSetChanged();
-//            }
-//        };
     }
 
     private static class ViewHolder {

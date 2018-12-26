@@ -28,11 +28,11 @@ custom attributes
 
 ### Snapshot
 
-![Default](https://raw.githubusercontent.com/isfaaghyth/material-menu/master/1.png)
+![Default](https://raw.githubusercontent.com/isfaaghyth/material-menu/master/1.jpg)
 
 with searchable:
 
-![Default](https://raw.githubusercontent.com/isfaaghyth/material-menu/master/2.png)
+![Default](https://raw.githubusercontent.com/isfaaghyth/material-menu/master/2.jpg)
 
 ### Let's go.
 

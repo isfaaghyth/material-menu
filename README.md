@@ -12,6 +12,8 @@ Menus display a list of choices on temporary surfaces.
 
 
 ## Sample Usage
+
+Step 1. Define a spinner view in your layout.
 ```xml
 <isfaaghyth.app.spinner.SpinnerMenu
         android:id="@+id/spinner_menu"
@@ -19,7 +21,31 @@ Menus display a list of choices on temporary surfaces.
         android:layout_height="wrap_content"/>
 ```
 
-custom attributes
+Step 2. Create a model and implement `ItemContent`.
+```kotlin
+data class Person(val name: String, val age: Int): ItemContent {
+    override fun menuItem(): String = name
+    override fun menuSubItem(): String = '$age' //optional, you can replace with empty like ''.
+}
+```
+
+Step 3. Show it!
+```kotlin
+//create a personList
+val personList = arrayListOf<Person>()
+personList.add("Isfha", 21)
+personList.add("Ghiath", 20)
+
+//define in your activity
+spinner_menu.setItems(personList())
+spinner_menu.get(object: MenuItemListener<Person>() { //handle on click.
+    override public fun onClick(Person item) {
+         Log.d("TAG", item.name);
+    }
+})
+```
+
+### Custom Attributes
 
 | Type |         Name        |
 |:---------:|:---------------------:|

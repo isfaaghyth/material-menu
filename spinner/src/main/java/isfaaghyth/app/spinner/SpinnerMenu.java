@@ -32,6 +32,7 @@ import java.util.List;
 
 import isfaaghyth.app.spinner.adapter.DropdownAdapter;
 import isfaaghyth.app.spinner.util.ItemContent;
+import isfaaghyth.app.spinner.util.KeyboardUtils;
 import isfaaghyth.app.spinner.util.MenuItemListener;
 
 /**
@@ -104,6 +105,7 @@ public class SpinnerMenu extends RelativeLayout {
     }
 
     public <T> void get(MenuItemListener<T> listener) {
+        KeyboardUtils.hideSoftInput(getRootView(), getContext());
         this.listener = listener;
     }
 
@@ -129,14 +131,21 @@ public class SpinnerMenu extends RelativeLayout {
      * @param <T> the item type
      */
     private <T extends ItemContent> void build(final List<T> items) {
-        final DropdownAdapter adapter = new DropdownAdapter<>(items, context);
+        final DropdownAdapter<T> adapter = new DropdownAdapter<>(items, context);
 
         //handle when the item is clicked through the dropdown menu
         adapter.setListener(new MenuItemListener<T>() {
             @Override
             public void onClick(T item) {
                 currentItem(item);
-                isCurrentClicked();
+
+                //hide keyboard
+                KeyboardUtils.hideSoftInput(getRootView(), getContext());
+
+                //reset adapter
+                edtSearch.setText("");
+                adapter.toDefault();
+
                 listener.onClick(item);
             }
         });
@@ -199,5 +208,8 @@ public class SpinnerMenu extends RelativeLayout {
                 isCurrentClicked();
             }
         });
+
+        //change view
+        isCurrentClicked();
     }
 }

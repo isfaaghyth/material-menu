@@ -73,7 +73,7 @@ Step 2. Add the dependency
 
 ```javascript
 dependencies {
-      implementation 'com.github.isfaaghyth:material-menu:1.0'
+      implementation 'com.github.isfaaghyth:material-menu:2.0'
 }
 ```
 

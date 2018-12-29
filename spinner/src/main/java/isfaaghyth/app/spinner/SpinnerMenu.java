@@ -194,15 +194,15 @@ public class SpinnerMenu extends RelativeLayout {
         });
 
         //maximum of 4 items displayed
-        int MAX_ITEMS_DISPLAYED = 4;
-        if (adapter.getCount() > MAX_ITEMS_DISPLAYED) {
-            View item = adapter.getView(0, null, lstDropdown);
-            item.measure(0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT, MAX_ITEMS_DISPLAYED * item.getMeasuredHeight()
-            );
-            lstDropdown.setLayoutParams(params);
-        }
+        //int MAX_ITEMS_DISPLAYED = 4;
+        //if (adapter.getCount() > MAX_ITEMS_DISPLAYED) {
+        //    View item = adapter.getView(0, null, lstDropdown);
+        //    item.measure(0, 0);
+        //    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        //            LayoutParams.MATCH_PARENT, MAX_ITEMS_DISPLAYED * item.getMeasuredHeight()
+        //    );
+        //    lstDropdown.setLayoutParams(params);
+        //}
     }
 
     private void initCurrentItem(final ItemContent item) {

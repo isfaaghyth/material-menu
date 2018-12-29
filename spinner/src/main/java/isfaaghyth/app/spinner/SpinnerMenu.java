@@ -161,10 +161,8 @@ public class SpinnerMenu extends RelativeLayout {
                 //hide keyboard
                 KeyboardUtils.hideSoftInput(getRootView(), getContext());
 
-                currentItem(item);
-
-                //change view
                 isCurrentClicked();
+                currentItem(item);
 
                 //reset adapter
                 edtSearch.setText("");
@@ -175,6 +173,13 @@ public class SpinnerMenu extends RelativeLayout {
         });
 
         lstDropdown.setAdapter(adapter);
+
+        currentItem.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isCurrentClicked();
+            }
+        });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -224,12 +229,5 @@ public class SpinnerMenu extends RelativeLayout {
         } else {
             txtSubItem.setVisibility(View.GONE);
         }
-
-        currentItem.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isCurrentClicked();
-            }
-        });
     }
 }

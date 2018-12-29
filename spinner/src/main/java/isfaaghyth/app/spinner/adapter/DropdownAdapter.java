@@ -51,6 +51,7 @@ public class DropdownAdapter<T extends ItemContent> extends ArrayAdapter<T> {
     }
 
     public void toDefault() {
+        this.items.clear();
         this.items.addAll(tempItems);
         notifyDataSetChanged();
     }
